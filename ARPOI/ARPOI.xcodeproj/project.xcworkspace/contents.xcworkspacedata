@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ARCapitals.xcodeproj">
+      location = "self:/Users/aclima/Documents/Repositories/iOS-AR/ARCapitals/ARPOI.xcodeproj">
    </FileRef>
 </Workspace>
