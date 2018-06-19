@@ -23,11 +23,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        // Create a new scene and set it to the view
+        sceneView.scene = SCNScene()
         
-        // Set the scene to the view
-        sceneView.scene = scene
+        // Create a blue spherical node with a 0.2m radius
+        let circleNode = createSphereNode(with: 0.2, color: .blue)
+
+        // Position it 1 meter in front of camera
+        circleNode.position = SCNVector3(0, 0, -1)
+        
+        // Add the node to the AR scene
+        sceneView.scene.rootNode.addChildNode(circleNode)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +51,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    func createSphereNode(with radius: CGFloat, color: UIColor) -> SCNNode {
+        let geometry = SCNSphere(radius: radius)
+        geometry.firstMaterial?.diffuse.contents = color
+        let sphereNode = SCNNode(geometry: geometry)
+        return sphereNode
     }
 
     // MARK: - ARSCNViewDelegate
