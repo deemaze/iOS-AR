@@ -9,13 +9,21 @@
 import UIKit
 import SceneKit
 import ARKit
+import CoreLocation
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    var locationManager: CLLocationManager
+    var latestLocation: CLLocation
+    
+    var motionManager: CMMotionManager
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup location manager
+        setupLocation()
         
         // Set the view's delegate
         sceneView.delegate = self
@@ -53,6 +61,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
+    // MARK: 3D Scene
+    
     func createSphereNode(with radius: CGFloat, color: UIColor) -> SCNNode {
         let geometry = SCNSphere(radius: radius)
         geometry.firstMaterial?.diffuse.contents = color
@@ -60,6 +70,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return sphereNode
     }
 
+    // MARK: location
+    
+    func setupLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
+        
+        locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
+    }
+
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("LocationManager didFailWithError: %@", error)
+        let alertController = UIAlertController(title: "LocationManager Error", message: "Failed to Get Your Location", preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("LocationManager didUpdateLocations: %@", locations)
+
+        if (locations.count > 0) {
+            latestLocation = locations.last!
+            // latestLocation.coordinate.longitude
+            // latestLocation.coordinate.latitude
+        }
+    }
+    
     // MARK: - ARSCNViewDelegate
     
 /*
@@ -72,17 +111,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 */
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
+        print("ARSession didFailWithError: %@", error)
+        let alertController = UIAlertController(title: "ARSession Error", message: error.localizedDescription, preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+        print("ARSession sessionWasInterrupted")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        print("ARSession sessionInterruptionEnded")
     }
 }
