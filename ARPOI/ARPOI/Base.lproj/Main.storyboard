@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VxV-xN-Jt4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cum-bF-Oky">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,6 +23,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="137" y="157"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="t4g-52-snm">
+            <objects>
+                <navigationController id="cum-bF-Oky" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BC6-Fz-XIt">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="VxV-xN-Jt4" kind="relationship" relationship="rootViewController" id="Rt8-n0-7p0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="euy-hL-gDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1642" y="503"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="irO-qH-P19">
@@ -33,17 +50,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6dv-ft-tAK">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3l-DF-MS9">
-                                        <rect key="frame" x="146" y="0.0" width="83" height="323.5"/>
+                                        <rect key="frame" x="146" y="0.0" width="83" height="301.5"/>
                                         <state key="normal" title="ARKit Demo"/>
                                         <connections>
                                             <segue destination="BV1-FR-VrT" kind="show" id="xsU-Yq-yAJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-jq-zTv">
-                                        <rect key="frame" x="92" y="323.5" width="191" height="323.5"/>
+                                        <rect key="frame" x="92" y="301.5" width="191" height="301.5"/>
                                         <state key="normal" title="ARKit + CoreLocation Demo"/>
                                         <connections>
                                             <segue destination="9oS-lR-lD8" kind="show" id="hfZ-rp-sUy"/>
@@ -61,6 +78,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PVv-Tw-9fk"/>
                     </view>
+                    <navigationItem key="navigationItem" id="6fK-d5-SKx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1NF-dL-r4W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -69,7 +87,7 @@
         <!--View Controller-->
         <scene sceneID="6va-AX-LOM">
             <objects>
-                <viewController id="9oS-lR-lD8" sceneMemberID="viewController">
+                <viewController id="9oS-lR-lD8" customClass="ARCLViewController" customModule="ARPOI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bPt-xZ-yVj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

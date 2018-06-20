@@ -11,6 +11,7 @@ import SceneKit
 import ARKit
 import CoreLocation
 
+@available(iOS 11.0, *)
 class ARKitViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!

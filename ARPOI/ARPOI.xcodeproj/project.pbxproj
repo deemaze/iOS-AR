@@ -15,6 +15,7 @@
 		A83B554120D946E60018CA34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A83B553F20D946E60018CA34 /* LaunchScreen.storyboard */; };
 		A83E671820DA9D2B00A2CC69 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */; };
 		A83E671C20DAB94200A2CC69 /* ARCLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */; };
+		A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */; };
 		FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A83E671920DAB5D000A2CC69 /* ARCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ARCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCLViewController.swift; sourceTree = "<group>"; };
+		A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -83,6 +85,7 @@
 				A83B553620D946E50018CA34 /* art.scnassets */,
 				A83B553820D946E50018CA34 /* ARKitViewController.swift */,
 				A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */,
+				A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */,
 				A83B553A20D946E50018CA34 /* Main.storyboard */,
 				A83B553D20D946E60018CA34 /* Assets.xcassets */,
 				A83B553F20D946E60018CA34 /* LaunchScreen.storyboard */,
@@ -216,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83E671C20DAB94200A2CC69 /* ARCLViewController.swift in Sources */,
+				A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */,
 				A83B553920D946E50018CA34 /* ARKitViewController.swift in Sources */,
 				A83B553520D946E50018CA34 /* AppDelegate.swift in Sources */,
 			);
