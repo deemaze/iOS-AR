@@ -13,9 +13,14 @@
 		A83B553C20D946E50018CA34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A83B553A20D946E50018CA34 /* Main.storyboard */; };
 		A83B553E20D946E60018CA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A83B553D20D946E60018CA34 /* Assets.xcassets */; };
 		A83B554120D946E60018CA34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A83B553F20D946E60018CA34 /* LaunchScreen.storyboard */; };
+		A83E671820DA9D2B00A2CC69 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */; };
+		A83E671A20DAB5D000A2CC69 /* ARCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83E671920DAB5D000A2CC69 /* ARCL.framework */; };
+		FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.release.xcconfig"; sourceTree = "<group>"; };
+		1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.debug.xcconfig"; sourceTree = "<group>"; };
 		A83B553120D946E50018CA34 /* ARPOI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPOI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83B553420D946E50018CA34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A83B553620D946E50018CA34 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -24,6 +29,10 @@
 		A83B553D20D946E60018CA34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A83B554020D946E60018CA34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A83B554220D946E60018CA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A83E671520DA9D1F00A2CC69 /* HDAugmentedReality.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HDAugmentedReality.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A83E671920DAB5D000A2CC69 /* ARCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ARCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +40,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A83E671A20DAB5D000A2CC69 /* ARCL.framework in Frameworks */,
+				A83E671820DA9D2B00A2CC69 /* CoreLocation.framework in Frameworks */,
+				FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F0E5E3F87B170470584398B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */,
+				13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A83B552820D946E50018CA34 = {
 			isa = PBXGroup;
 			children = (
 				A83B553320D946E50018CA34 /* ARPOI */,
 				A83B553220D946E50018CA34 /* Products */,
+				A83E671420DA9D1F00A2CC69 /* Frameworks */,
+				6F0E5E3F87B170470584398B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +90,17 @@
 			path = ARPOI;
 			sourceTree = "<group>";
 		};
+		A83E671420DA9D1F00A2CC69 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A83E671920DAB5D000A2CC69 /* ARCL.framework */,
+				A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */,
+				A83E671520DA9D1F00A2CC69 /* HDAugmentedReality.framework */,
+				BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +108,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A83B554520D946E60018CA34 /* Build configuration list for PBXNativeTarget "ARPOI" */;
 			buildPhases = (
+				AEC0591132B9EDD67E3B30C1 /* [CP] Check Pods Manifest.lock */,
 				A83B552D20D946E50018CA34 /* Sources */,
 				A83B552E20D946E50018CA34 /* Frameworks */,
 				A83B552F20D946E50018CA34 /* Resources */,
+				F7BC7B0EA1C6E4E600F3BF14 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +169,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AEC0591132B9EDD67E3B30C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARPOI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7BC7B0EA1C6E4E600F3BF14 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A83B552D20D946E50018CA34 /* Sources */ = {
@@ -282,6 +357,7 @@
 		};
 		A83B554620D946E60018CA34 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +376,7 @@
 		};
 		A83B554720D946E60018CA34 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

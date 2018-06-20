@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double HDAugmentedRealityVersionNumber;
-FOUNDATION_EXPORT const unsigned char HDAugmentedRealityVersionString[];
+FOUNDATION_EXPORT double ARCLVersionNumber;
+FOUNDATION_EXPORT const unsigned char ARCLVersionString[];
 

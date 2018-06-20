@@ -1,16 +1,16 @@
 PODS:
-  - HDAugmentedReality (2.3.0)
+  - ARCL (1.0.1)
 
 DEPENDENCIES:
-  - HDAugmentedReality (~> 2.3)
+  - ARCL
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - HDAugmentedReality
+    - ARCL
 
 SPEC CHECKSUMS:
-  HDAugmentedReality: 2ea96cb488aa81298e6557a897b4252d62e55843
+  ARCL: 193b108d6fd5277ce742be3af92ccf81bbdd2f3b
 
-PODFILE CHECKSUM: 8103d59a833ef17d2dfeed3e847adf3158919ce9
+PODFILE CHECKSUM: 1ecff0fd3e5f6706d0bde540b3c06bd51315cc3d
 
 COCOAPODS: 1.5.3
