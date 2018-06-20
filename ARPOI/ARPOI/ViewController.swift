@@ -14,10 +14,8 @@ import CoreLocation
 class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    var locationManager: CLLocationManager
-    var latestLocation: CLLocation
-    
-    var motionManager: CMMotionManager
+    var locationManager: CLLocationManager?
+    var latestLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,11 +72,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     func setupLocation() {
         locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
         
-        locationManager.startUpdatingLocation()
-        locationManager.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
+        locationManager?.requestWhenInUseAuthorization()
     }
 
     // MARK: - CLLocationManagerDelegate
