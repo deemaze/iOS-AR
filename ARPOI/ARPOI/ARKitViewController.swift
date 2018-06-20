@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  ARCapitals
+//  ARKitViewController.swift
+//  ARPOI
 //
 //  Created by António Lima on 19/06/2018.
 //  Copyright © 2018 Deemaze. All rights reserved.
@@ -11,35 +11,19 @@ import SceneKit
 import ARKit
 import CoreLocation
 
-class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
-
-    @IBOutlet var sceneView: ARSCNView!
-    var locationManager: CLLocationManager?
+class ARKitViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
+    
+    var locationManager: CLLocationManager!
     var latestLocation: CLLocation?
+    
+    @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Setup location manager
         setupLocation()
         
-        // Set the view's delegate
-        sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Create a new scene and set it to the view
-        sceneView.scene = SCNScene()
-        
-        // Create a blue spherical node with a 0.2m radius
-        let circleNode = createSphereNode(with: 0.2, color: .blue)
-
-        // Position it 1 meter in front of camera
-        circleNode.position = SCNVector3(0, 0, -1)
-        
-        // Add the node to the AR scene
-        sceneView.scene.rootNode.addChildNode(circleNode)
+        setupARScene()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,18 +43,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         sceneView.session.pause()
     }
     
-    // MARK: 3D Scene
-    
-    func createSphereNode(with radius: CGFloat, color: UIColor) -> SCNNode {
-        let geometry = SCNSphere(radius: radius)
-        geometry.firstMaterial?.diffuse.contents = color
-        let sphereNode = SCNNode(geometry: geometry)
-        return sphereNode
-    }
-
     // MARK: location
     
     func setupLocation() {
+        // Setup location manager
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
@@ -78,7 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         locationManager?.startUpdatingLocation()
         locationManager?.requestWhenInUseAuthorization()
     }
-
+    
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -89,13 +65,44 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("LocationManager didUpdateLocations: %@", locations)
-
+        
         if (locations.count > 0) {
             latestLocation = locations.last!
             // latestLocation.coordinate.longitude
             // latestLocation.coordinate.latitude
         }
     }
+    
+    // MARK: AR Scene
+    
+    func setupARScene() {
+        
+        // Set the view's delegate
+        sceneView.delegate = self
+        
+        // Show statistics such as fps and timing information
+        sceneView.showsStatistics = true
+        
+        // Create a new scene and set it to the view
+        sceneView.scene = SCNScene()
+        
+        // Create a blue spherical node with a 0.2m radius
+        let circleNode = createSphereNode(with: 0.2, color: .blue)
+        
+        // Position it 1 meter in front of camera
+        circleNode.position = SCNVector3(0, 0, -1)
+        
+        // Add the node to the AR scene
+        sceneView.scene.rootNode.addChildNode(circleNode)
+    }
+    
+    func createSphereNode(with radius: CGFloat, color: UIColor) -> SCNNode {
+        let geometry = SCNSphere(radius: radius)
+        geometry.firstMaterial?.diffuse.contents = color
+        let sphereNode = SCNNode(geometry: geometry)
+        return sphereNode
+    }
+
     
     // MARK: - ARSCNViewDelegate
     

@@ -11,6 +11,7 @@ import ARKit
 import CoreLocation
 import MapKit
 
+@available(iOS 11.0, *)
 public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
@@ -37,6 +38,7 @@ public enum LocationEstimateMethod {
 }
 
 //Should conform to delegate here, add in future commit
+@available(iOS 11.0, *)
 public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
@@ -92,21 +94,25 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public override init(frame: CGRect, options: [String : Any]? = nil) {
         super.init(frame: frame, options: options)
-        
+        finishInitialization()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        finishInitialization()
+    }
+
+    private func finishInitialization() {
         locationManager.delegate = self
-        
+
         delegate = self
-        
+
         // Show statistics such as fps and timing information
         showsStatistics = false
-        
+
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     override public func layoutSubviews() {
@@ -280,6 +286,26 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
+    }
+    
+    /// Determine if scene contains a node with the specified tag
+    ///
+    /// - Parameter tag: tag text
+    /// - Returns: true if a LocationNode with the tag exists; false otherwise
+    public func sceneContainsNodeWithTag(_ tag: String) -> Bool {
+        return findNodes(tagged: tag).count > 0
+    }
+    
+    /// Find all location nodes in the scene tagged with `tag`
+    ///
+    /// - Parameter tag: The tag text for which to search nodes.
+    /// - Returns: A list of all matching tags
+    public func findNodes(tagged tag: String) -> [LocationNode] {
+        guard tag.count > 0 else {
+            return []
+        }
+        
+        return locationNodes.filter { $0.tag == tag }
     }
     
     public func removeLocationNode(locationNode: LocationNode) {
@@ -480,11 +506,14 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             print("camera did change tracking state: normal")
         case .notAvailable:
             print("camera did change tracking state: not available")
+        case .limited(.relocalizing):
+            print("camera did change tracking state: limited, relocalizing")
         }
     }
 }
 
 //MARK: LocationManager
+@available(iOS 11.0, *)
 extension SceneLocationView: LocationManagerDelegate {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
         addSceneLocationEstimate(location: location)

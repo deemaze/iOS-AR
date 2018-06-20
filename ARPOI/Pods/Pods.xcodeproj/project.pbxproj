@@ -392,6 +392,79 @@
 			};
 			name = Release;
 		};
+		3605FF577427F26AC7A96D17DF629D6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 269DE76B3478F0F62664B0C55334AE4F /* ARCL.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ARCL/ARCL-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ARCL/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/ARCL/ARCL.modulemap";
+				PRODUCT_MODULE_NAME = ARCL;
+				PRODUCT_NAME = ARCL;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		47D40D3A8733A6355797D6B089EEE11C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 269DE76B3478F0F62664B0C55334AE4F /* ARCL.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ARCL/ARCL-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ARCL/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/ARCL/ARCL.modulemap";
+				PRODUCT_MODULE_NAME = ARCL;
+				PRODUCT_NAME = ARCL;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		5C50CF37BC6BF4BD0D7A271104F1AC8C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4A8CB8100C90756FFB91D67C503C4205 /* Pods-ARPOI.release.xcconfig */;
@@ -496,81 +569,6 @@
 			};
 			name = Debug;
 		};
-		C7191DC0E7893874261B04F9D5EABE1A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 269DE76B3478F0F62664B0C55334AE4F /* ARCL.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ARCL/ARCL-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ARCL/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/ARCL/ARCL.modulemap";
-				PRODUCT_MODULE_NAME = ARCL;
-				PRODUCT_NAME = ARCL;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		D6E9453D46A156BD5DB902C6088DE292 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 269DE76B3478F0F62664B0C55334AE4F /* ARCL.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ARCL/ARCL-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ARCL/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/ARCL/ARCL.modulemap";
-				PRODUCT_MODULE_NAME = ARCL;
-				PRODUCT_NAME = ARCL;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		D89B5338A6F7947D533955A026B649BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0079E5686690AF6D1AE4CC562EBC908 /* Pods-ARPOI.debug.xcconfig */;
@@ -618,8 +616,8 @@
 		07957C2548F664A1BF6A71CD7DE41358 /* Build configuration list for PBXNativeTarget "ARCL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C7191DC0E7893874261B04F9D5EABE1A /* Debug */,
-				D6E9453D46A156BD5DB902C6088DE292 /* Release */,
+				3605FF577427F26AC7A96D17DF629D6A /* Debug */,
+				47D40D3A8733A6355797D6B089EEE11C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
