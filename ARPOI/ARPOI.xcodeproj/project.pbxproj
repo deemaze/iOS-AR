@@ -17,17 +17,7 @@
 		A83E671C20DAB94200A2CC69 /* ARCLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */; };
 		A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */; };
 		A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */; };
-		A83E672220DBBC8D00A2CC69 /* RouteSegmentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672120DBBC8D00A2CC69 /* RouteSegmentNode.swift */; };
-		A83E672E20DC008100A2CC69 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672420DC008100A2CC69 /* SCNVector3+Extensions.swift */; };
-		A83E672F20DC008100A2CC69 /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672520DC008100A2CC69 /* SceneLocationEstimate.swift */; };
-		A83E673020DC008100A2CC69 /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672620DC008100A2CC69 /* SceneLocationEstimate+Extensions.swift */; };
-		A83E673120DC008100A2CC69 /* FloatingPoint+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672720DC008100A2CC69 /* FloatingPoint+Radians.swift */; };
-		A83E673220DC008100A2CC69 /* LocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672820DC008100A2CC69 /* LocationNode.swift */; };
-		A83E673320DC008100A2CC69 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672920DC008100A2CC69 /* CGPoint+Extensions.swift */; };
-		A83E673420DC008100A2CC69 /* CLLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672A20DC008100A2CC69 /* CLLocation+Extensions.swift */; };
-		A83E673520DC008100A2CC69 /* SceneLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672B20DC008100A2CC69 /* SceneLocationView.swift */; };
-		A83E673620DC008100A2CC69 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672C20DC008100A2CC69 /* LocationManager.swift */; };
-		A83E673720DC008100A2CC69 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672D20DC008100A2CC69 /* SCNNode+Extensions.swift */; };
+		A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */; };
 		FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,17 +38,7 @@
 		A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCLViewController.swift; sourceTree = "<group>"; };
 		A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegment.swift; sourceTree = "<group>"; };
-		A83E672120DBBC8D00A2CC69 /* RouteSegmentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegmentNode.swift; sourceTree = "<group>"; };
-		A83E672420DC008100A2CC69 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
-		A83E672520DC008100A2CC69 /* SceneLocationEstimate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneLocationEstimate.swift; sourceTree = "<group>"; };
-		A83E672620DC008100A2CC69 /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
-		A83E672720DC008100A2CC69 /* FloatingPoint+Radians.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Radians.swift"; sourceTree = "<group>"; };
-		A83E672820DC008100A2CC69 /* LocationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationNode.swift; sourceTree = "<group>"; };
-		A83E672920DC008100A2CC69 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
-		A83E672A20DC008100A2CC69 /* CLLocation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Extensions.swift"; sourceTree = "<group>"; };
-		A83E672B20DC008100A2CC69 /* SceneLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneLocationView.swift; sourceTree = "<group>"; };
-		A83E672C20DC008100A2CC69 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		A83E672D20DC008100A2CC69 /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
+		A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegmentAnnotationNode.swift; sourceTree = "<group>"; };
 		BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,12 +85,11 @@
 		A83B553320D946E50018CA34 /* ARPOI */ = {
 			isa = PBXGroup;
 			children = (
-				A83E672320DC008100A2CC69 /* ARCL */,
 				A83B553420D946E50018CA34 /* AppDelegate.swift */,
 				A83B553620D946E50018CA34 /* art.scnassets */,
 				A83B553820D946E50018CA34 /* ARKitViewController.swift */,
 				A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */,
-				A83E672120DBBC8D00A2CC69 /* RouteSegmentNode.swift */,
+				A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */,
 				A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */,
 				A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */,
 				A83B553A20D946E50018CA34 /* Main.storyboard */,
@@ -132,23 +111,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A83E672320DC008100A2CC69 /* ARCL */ = {
-			isa = PBXGroup;
-			children = (
-				A83E672420DC008100A2CC69 /* SCNVector3+Extensions.swift */,
-				A83E672520DC008100A2CC69 /* SceneLocationEstimate.swift */,
-				A83E672620DC008100A2CC69 /* SceneLocationEstimate+Extensions.swift */,
-				A83E672720DC008100A2CC69 /* FloatingPoint+Radians.swift */,
-				A83E672820DC008100A2CC69 /* LocationNode.swift */,
-				A83E672920DC008100A2CC69 /* CGPoint+Extensions.swift */,
-				A83E672A20DC008100A2CC69 /* CLLocation+Extensions.swift */,
-				A83E672B20DC008100A2CC69 /* SceneLocationView.swift */,
-				A83E672C20DC008100A2CC69 /* LocationManager.swift */,
-				A83E672D20DC008100A2CC69 /* SCNNode+Extensions.swift */,
-			);
-			path = ARCL;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -160,6 +122,7 @@
 				A83B552D20D946E50018CA34 /* Sources */,
 				A83B552E20D946E50018CA34 /* Frameworks */,
 				A83B552F20D946E50018CA34 /* Resources */,
+				ACA3FB315BB0A7D882855542 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,6 +181,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		ACA3FB315BB0A7D882855542 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AEC0591132B9EDD67E3B30C1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -244,21 +225,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83E671C20DAB94200A2CC69 /* ARCLViewController.swift in Sources */,
-				A83E673120DC008100A2CC69 /* FloatingPoint+Radians.swift in Sources */,
-				A83E673620DC008100A2CC69 /* LocationManager.swift in Sources */,
-				A83E673520DC008100A2CC69 /* SceneLocationView.swift in Sources */,
-				A83E672F20DC008100A2CC69 /* SceneLocationEstimate.swift in Sources */,
-				A83E673220DC008100A2CC69 /* LocationNode.swift in Sources */,
-				A83E673420DC008100A2CC69 /* CLLocation+Extensions.swift in Sources */,
 				A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */,
-				A83E673720DC008100A2CC69 /* SCNNode+Extensions.swift in Sources */,
 				A83B553920D946E50018CA34 /* ARKitViewController.swift in Sources */,
-				A83E673020DC008100A2CC69 /* SceneLocationEstimate+Extensions.swift in Sources */,
-				A83E672220DBBC8D00A2CC69 /* RouteSegmentNode.swift in Sources */,
+				A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */,
 				A83B553520D946E50018CA34 /* AppDelegate.swift in Sources */,
 				A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */,
-				A83E673320DC008100A2CC69 /* CGPoint+Extensions.swift in Sources */,
-				A83E672E20DC008100A2CC69 /* SCNVector3+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
