@@ -6,10 +6,11 @@
 //  Copyright © 2018 Deemaze. All rights reserved.
 //
 
-import UIKit
+import CoreLocation
 
 struct PointOfInterest {
-    var latitude: Float
-    var longitude: Float
+    var latitude: CLLocationDegrees
+    var longitude: CLLocationDegrees
+    var altitude: CLLocationDegrees
 
 }

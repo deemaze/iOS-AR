@@ -84,6 +84,12 @@ class ARKitViewController: UIViewController, ARSCNViewDelegate, CLLocationManage
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        // debug options
+        sceneView.debugOptions = [
+            ARSCNDebugOptions.showFeaturePoints,
+            ARSCNDebugOptions.showWorldOrigin
+        ]
+        
         // Create a new scene and set it to the view
         sceneView.scene = SCNScene()
         
