@@ -16,9 +16,7 @@ import ARCL
 
 open class RouteSegmentAnnotationNode: LocationNode {
     
-    ///Subnodes and adjustments should be applied to this subnode
-    ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
-    public let annotationNode: SCNNode
+    public let routeNode: SCNNode
     
     ///Whether the node should be scaled relative to its distance from the camera
     ///Setting to true causes annotation nodes to scale like a regular node
@@ -27,29 +25,98 @@ open class RouteSegmentAnnotationNode: LocationNode {
     ///Setting it to false scales the node to visually appear at the same size no matter the distance
     public var scaleRelativeToDistance = true
     
-    public init(startLocation: CLLocation, endLocation: CLLocation) {
+    public init(startNode: RouteAnnotationNode, endNode: RouteAnnotationNode) {
         
         // the node is set between the start and end locations
-        let distance = CGFloat(startLocation.distance(from: endLocation))
+        let startLocation = startNode.location!
+        let endLocation = endNode.location!
         let coordinateInBetween = CLLocationCoordinate2D(latitude: (startLocation.coordinate.latitude + endLocation.coordinate.latitude)/2.0,
                                    longitude: (startLocation.coordinate.longitude + endLocation.coordinate.longitude)/2.0)
         let locationInBetween = CLLocation(coordinate: coordinateInBetween,
                                            altitude: (startLocation.altitude + endLocation.altitude)/2.0)
         
-        let routeCylinder = SCNCylinder(radius: 5, height: distance)
-        routeCylinder.firstMaterial!.diffuse.contents = UIColor.cyan
-        routeCylinder.firstMaterial!.lightingModel = .constant
+        routeNode = LineNode(start: startNode.position, end: endNode.position)
         
-        annotationNode = SCNNode()
-        annotationNode.geometry = routeCylinder
-        
+//        let routeGeometry = SCNGeometry().lineFrom(vector: startNode.position, toVector: endNode.position)
+//        routeGeometry.firstMaterial!.diffuse.contents = UIColor.cyan
+//        routeGeometry.firstMaterial!.lightingModel = .phong
+//        routeNode = SCNNode()
+//        routeNode.geometry = routeGeometry
         
         super.init(location: locationInBetween)
         
-        addChildNode(annotationNode)
+        addChildNode(routeNode)
+        
+//        // ------
+//        // for debug purposes
+//        let routeGeometryCopy = SCNCylinder(radius: 5, height: distance)
+//        routeGeometryCopy.firstMaterial!.diffuse.contents = UIColor.red
+//        routeGeometryCopy.firstMaterial!.lightingModel = .phong
+//        routeGeometryCopy.firstMaterial!.fillMode = .lines
+//        let routeNodeCopy = SCNNode()
+//        routeNodeCopy.geometry = routeGeometryCopy
+//        addChildNode(routeNodeCopy)
+//        // ------
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+//extension SCNGeometry {
+//    func lineFrom(vector vector1: SCNVector3, toVector vector2: SCNVector3) -> SCNGeometry {
+//
+//        let indices: [Int32] = [0, 1]
+//        let source = SCNGeometrySource(vertices: [vector1, vector2])
+//        let element = SCNGeometryElement(indices: indices, primitiveType: .line)
+//
+//        return SCNGeometry(sources: [source], elements: [element])
+//    }
+//}
+
+class LineNode: SCNNode{
+    
+    init(start: SCNVector3, end: SCNVector3) {
+        super.init()
+        
+        let distance = distanceBetweenPoints2(pointA: start, pointB: end)
+        
+        position = start
+        
+        let endNode = SCNNode()
+        
+        endNode.position = end
+        
+        let ndZAlign = SCNNode()
+        ndZAlign.eulerAngles.x = Float.pi/2
+        
+        let cylgeo = SCNBox(width: 5, height: distance, length: 5, chamferRadius: 0)
+        cylgeo.firstMaterial!.diffuse.contents = UIColor.cyan
+        cylgeo.firstMaterial!.lightingModel = .phong
+        cylgeo.firstMaterial!.fillMode = .lines
+        
+        let ndCylinder = SCNNode(geometry: cylgeo )
+        ndCylinder.position.y = Float(-distance/2) + 0.001
+        ndZAlign.addChildNode(ndCylinder)
+        
+        addChildNode(ndZAlign)
+        
+        constraints = [SCNLookAtConstraint(target: endNode)]
+    }
+    
+    
+    func distanceBetweenPoints2(pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
+        let distance = sqrt(
+            (pointA.x - pointB.x) * (pointA.x - pointB.x) +
+            (pointA.y - pointB.y) * (pointA.y - pointB.y) +
+            (pointA.z - pointB.z) * (pointA.z - pointB.z)
+        )
+        return CGFloat(distance)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

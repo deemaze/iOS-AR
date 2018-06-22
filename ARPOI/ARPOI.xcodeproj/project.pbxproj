@@ -18,6 +18,7 @@
 		A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */; };
 		A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */; };
 		A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */; };
+		A83E673920DCFB3000A2CC69 /* RouteAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E673820DCFB3000A2CC69 /* RouteAnnotationNode.swift */; };
 		FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegment.swift; sourceTree = "<group>"; };
 		A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegmentAnnotationNode.swift; sourceTree = "<group>"; };
+		A83E673820DCFB3000A2CC69 /* RouteAnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAnnotationNode.swift; sourceTree = "<group>"; };
 		BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 				A83B553820D946E50018CA34 /* ARKitViewController.swift */,
 				A83E671B20DAB94200A2CC69 /* ARCLViewController.swift */,
 				A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */,
+				A83E673820DCFB3000A2CC69 /* RouteAnnotationNode.swift */,
 				A83E671D20DAC6A400A2CC69 /* PointOfInterest.swift */,
 				A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */,
 				A83B553A20D946E50018CA34 /* Main.storyboard */,
@@ -229,6 +232,7 @@
 				A83B553920D946E50018CA34 /* ARKitViewController.swift in Sources */,
 				A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */,
 				A83B553520D946E50018CA34 /* AppDelegate.swift in Sources */,
+				A83E673920DCFB3000A2CC69 /* RouteAnnotationNode.swift in Sources */,
 				A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
