@@ -7,25 +7,29 @@
 //
 
 import UIKit
+import MapKit
 import ARCL
 import CoreLocation
 
 @available(iOS 11.0, *)
-class ARCLViewController: UIViewController {
+class ARCLViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var locationManager: CLLocationManager!
+    var latestLocation: CLLocation?
     
     var sceneLocationView: SceneLocationView!
     
     var pois: [PointOfInterest]!
-    var routeSegments: [RouteSegment]!
+    var selectedPOI: PointOfInterest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLocation()
+        
         setupARScene()
         
         setupPOIs()
-        
-        setupRouteSegments()
         
     }
     
@@ -39,8 +43,7 @@ class ARCLViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     
-        // TODO: remove
-        if false {
+        if selectedPOI == nil {
             // get POIs
             if (pois.count == 0){
                 pois = getPOIs()
@@ -52,15 +55,13 @@ class ARCLViewController: UIViewController {
             }
         }
         else {
-            // get route segments
-            if (routeSegments.count == 0){
-                routeSegments = getRouteSegments()
+            if latestLocation != nil {
+                // get route segments
+                getRouteSegments(startCoordinate: (latestLocation?.coordinate)!,
+                                 endCoordinate: CLLocationCoordinate2D(latitude: (selectedPOI?.latitude)!,
+                                                                       longitude: (selectedPOI?.longitude)!))
             }
             
-            // add POIs to AR Scene
-            for routeSegment in routeSegments {
-                addRouteSegmentToARScene(routeSegment)
-            }
         }
         
     }
@@ -78,14 +79,38 @@ class ARCLViewController: UIViewController {
         sceneLocationView.frame = view.bounds
     }
     
+    // MARK: location
+    
+    func setupLocation() {
+        // Setup location manager
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
+        
+        locationManager?.startUpdatingLocation()
+        locationManager?.requestWhenInUseAuthorization()
+    }
+    
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("LocationManager didFailWithError: %@", error)
+        let alertController = UIAlertController(title: "LocationManager Error", message: "Failed to Get Your Location", preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("LocationManager didUpdateLocations: %@", locations)
+        
+        if (locations.count > 0) {
+            latestLocation = locations.last!
+        }
+    }
+    
     // MARK: POIs
     
     func setupPOIs() {
         pois = []
-    }
-    
-    func setupRouteSegments() {
-        routeSegments = []
     }
     
     func getPOIs() -> [PointOfInterest] {
@@ -100,20 +125,73 @@ class ARCLViewController: UIViewController {
         ]
     }
     
-    func getRouteSegments() -> [RouteSegment] {
+    func getRouteSegments(startCoordinate: CLLocationCoordinate2D, endCoordinate: CLLocationCoordinate2D) {
         
-        return [
-            RouteSegment(startLatitude: 40.211338, startLongitude: -8.421190, startAltitude: 0,
-                         endLatitude: 40.212291, endLongitude: -8.423103, endAltitude: 0),
-            RouteSegment(startLatitude: 40.212291, startLongitude: -8.423103, startAltitude: 0,
-                         endLatitude: 40.212370, endLongitude: -8.423849, endAltitude: 0),
-            RouteSegment(startLatitude: 40.212370, startLongitude: -8.423849, startAltitude: 0,
-                         endLatitude: 40.210334, endLongitude: -8.420870, endAltitude: 0),
-            RouteSegment(startLatitude: 40.210334, startLongitude: -8.420870, startAltitude: 0,
-                         endLatitude: 40.211142, endLongitude: -8.422336, endAltitude: 0),
-            RouteSegment(startLatitude: 40.211142, startLongitude: -8.422336, startAltitude: 0,
-                         endLatitude: 40.210830, endLongitude: -8.422673, endAltitude: 0)
-        ]
+        let directionRequest = setupRouteDirectionsRequest(startCoordinate: startCoordinate, endCoordinate: endCoordinate)
+        
+        // Request the directions between the two points
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate {
+            (response, error) -> Void in
+            
+            guard let response = response else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+                return
+            }
+            
+            // add route segments to AR Scene
+            self.manageRouteDirections(response)
+        }
+    }
+    
+    func setupRouteDirectionsRequest(startCoordinate: CLLocationCoordinate2D, endCoordinate: CLLocationCoordinate2D) -> MKDirections.Request {
+        let sourcePlacemark = MKPlacemark(coordinate: startCoordinate, addressDictionary: nil)
+        let destinationPlacemark = MKPlacemark(coordinate: endCoordinate, addressDictionary: nil)
+        
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        
+        let sourceAnnotation = MKPointAnnotation()
+        
+        if let location = sourcePlacemark.location {
+            sourceAnnotation.coordinate = location.coordinate
+        }
+        
+        let destinationAnnotation = MKPointAnnotation()
+        
+        if let location = destinationPlacemark.location {
+            destinationAnnotation.coordinate = location.coordinate
+        }
+        
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.transportType = .walking
+        
+        return directionRequest
+    }
+    
+    func manageRouteDirections(_ response: MKDirections.Response) {
+        for route in response.routes {
+            for step in route.steps {
+                
+                let pointCount = step.polyline.pointCount
+                if pointCount == 2 {
+                    
+                    let routeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+                    step.polyline.getCoordinates(routeCoordinates, range: NSMakeRange(0, pointCount))
+                    
+                    let startCoordinate = routeCoordinates[0]
+                    let endCoordinate = routeCoordinates[1]
+                    
+                    let routeSegment = RouteSegment(startLatitude: startCoordinate.latitude, startLongitude: startCoordinate.longitude, startAltitude: 0,
+                                                    endLatitude: endCoordinate.latitude, endLongitude: endCoordinate.longitude, endAltitude: 0)
+                    self.addRouteSegmentToARScene(routeSegment)
+                }
+            }
+        }
     }
     
     func addPOIToARScene(_ poi: PointOfInterest) {
@@ -152,7 +230,6 @@ class ARCLViewController: UIViewController {
         sceneLocationView = SceneLocationView()
         
         view.addSubview(sceneLocationView)
-
     }
     
 }
