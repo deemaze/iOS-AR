@@ -22,16 +22,21 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     var sceneLocationView: SceneLocationView!
     
     var pois: [PointOfInterest]!
+    var locationAnnotationNode2POI: [LocationAnnotationNode: PointOfInterest]!
     var selectedPOI: PointOfInterest?
+    
+    var drawnLocationNodes: [LocationNode]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        toggleResetButtonStatus()
+        
         setupLocation()
         
-        setupARScene()
-        
         setupPOIs()
+        
+        setupARScene()
         
     }
     
@@ -61,43 +66,61 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         sceneLocationView.frame = view.bounds
     }
     
-    func drawARScene() {
-        
+    // MARK: Navigation bar actions
+    
+    func toggleResetButtonStatus() {
         if selectedPOI == nil {
-            // get POIs
-            if (pois.count == 0){
-                pois = getPOIs()
-            }
-            
-            // add POIs to AR Scene
-            for poi in pois {
-                addPOIToARScene(poi)
-            }
+            hideResetButton()
         }
         else {
-            if latestLocation != nil {
-                // get route segments
-                getRouteSegments(startCoordinate: (latestLocation?.coordinate)!,
-                                 endCoordinate: CLLocationCoordinate2D(latitude: (selectedPOI?.latitude)!,
-                                                                       longitude: (selectedPOI?.longitude)!))
-            }
-            
+            showResetButton()
         }
     }
     
-    // MARK: Navigation bar actions
-    
-    @IBAction func resetButtonPressed(_ sender: Any) {
-
+    func hideResetButton() {
         // hide reset button
         resetButton.tintColor = .clear
         resetButton.isEnabled = false
         resetButton.isAccessibilityElement = false
+    }
+    
+    func showResetButton() {
+        // show reset button
+        resetButton.tintColor = .blue
+        resetButton.isEnabled = true
+        resetButton.isAccessibilityElement = true
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
 
         // re-draw the AR scene
         selectedPOI = nil
-        drawARScene()
+        clearNodesAndRedrawARScene()
     }
+    
+    // MARK: AR scene actions
+    
+    @objc
+    func handleARObjectTap(gestureRecognizer: UITapGestureRecognizer) {
+        guard gestureRecognizer.view != nil else { return }
+        
+        if gestureRecognizer.state == .ended {
+            
+            // Look for an object directly under the touch location
+            let location: CGPoint = gestureRecognizer.location(in: sceneLocationView)
+            let hits = sceneLocationView.hitTest(location, options: nil)
+            if !hits.isEmpty {
+                
+                // select the first match
+                let tappedNode = hits.first?.node.parent as! LocationAnnotationNode
+                selectedPOI = locationAnnotationNode2POI?[tappedNode]
+
+                clearNodesAndRedrawARScene()
+            }
+            
+        }
+    }
+    
     
     // MARK: location
     
@@ -105,7 +128,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         // Setup location manager
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for POIs
+        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for walking between POIs
         
         locationManager?.startUpdatingLocation()
         locationManager?.requestWhenInUseAuthorization()
@@ -131,6 +154,8 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func setupPOIs() {
         pois = []
+        locationAnnotationNode2POI = [LocationAnnotationNode: PointOfInterest]()
+        drawnLocationNodes = []
     }
     
     func getPOIs() -> [PointOfInterest] {
@@ -144,6 +169,8 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
             PointOfInterest(latitude: 50.504571, longitude: -0.019717, altitude: 0)
         ]
     }
+    
+    // MARK: Directions
     
     func getRouteSegments(startCoordinate: CLLocationCoordinate2D, endCoordinate: CLLocationCoordinate2D) {
         
@@ -214,27 +241,32 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    // MARK: AR Scene
+    
     func addPOIToARScene(_ poi: PointOfInterest) {
         let location = CLLocation(latitude: poi.latitude, longitude: poi.longitude)
         let annotationNode = LocationAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!)
         
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
+        drawnLocationNodes.append(annotationNode)
+        locationAnnotationNode2POI[annotationNode] = poi
     }
     
     func addRouteSegmentToARScene(_ routeSegment: RouteSegment) {
         
         let startLocation = CLLocation(latitude: routeSegment.startLatitude, longitude: routeSegment.startLongitude)
-        let endLocation = CLLocation(latitude: routeSegment.endLatitude, longitude: routeSegment.endLongitude)
-
         let startNode = RouteAnnotationNode(location: startLocation)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: startNode)
+        drawnLocationNodes.append(startNode)
         
+        let endLocation = CLLocation(latitude: routeSegment.endLatitude, longitude: routeSegment.endLongitude)
         let endNode = RouteAnnotationNode(location: endLocation)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: endNode)
-
+        drawnLocationNodes.append(endNode)
+        
         let routeSegmentAnnotationNode = RouteSegmentAnnotationNode(startNode: startNode, endNode: endNode)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: routeSegmentAnnotationNode)
-
+        drawnLocationNodes.append(routeSegmentAnnotationNode)
     }
     
     func addDestinationPOIToARScene(_ poi: PointOfInterest) {
@@ -242,14 +274,52 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         let routeAnnotationNode = RouteAnnotationNode(location: location, color: .red)
         
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: routeAnnotationNode)
+        drawnLocationNodes.append(routeAnnotationNode)
     }
-    
-    // MARK: AR Scene
     
     func setupARScene() {
         sceneLocationView = SceneLocationView()
-        
         view.addSubview(sceneLocationView)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleARObjectTap(gestureRecognizer:)))
+        sceneLocationView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func drawARScene() {
+        
+        if selectedPOI == nil {
+            // get POIs
+            if (pois.count == 0){
+                pois = getPOIs()
+            }
+            
+            // add POIs to AR Scene
+            for poi in pois {
+                addPOIToARScene(poi)
+            }
+        }
+        else {
+            if latestLocation != nil {
+                // get route segments
+                getRouteSegments(startCoordinate: (latestLocation?.coordinate)!,
+                                 endCoordinate: CLLocationCoordinate2D(latitude: (selectedPOI?.latitude)!,
+                                                                       longitude: (selectedPOI?.longitude)!))
+            }
+            
+        }
+    }
+    
+    func clearNodesAndRedrawARScene() {
+
+        for locationNode in drawnLocationNodes {
+            sceneLocationView.removeLocationNode(locationNode: locationNode)
+        }
+        
+        drawnLocationNodes = []
+        
+        toggleResetButtonStatus()
+        
+        drawARScene()
     }
     
 }
