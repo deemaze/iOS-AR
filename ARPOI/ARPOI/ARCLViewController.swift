@@ -14,6 +14,8 @@ import CoreLocation
 @available(iOS 11.0, *)
 class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
+    @IBOutlet weak var resetButton: UIBarButtonItem!
+    
     var locationManager: CLLocationManager!
     var latestLocation: CLLocation?
     
@@ -42,7 +44,25 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        drawARScene()
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Pause the view's session
+        sceneLocationView.pause()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        sceneLocationView.frame = view.bounds
+    }
+    
+    func drawARScene() {
+        
         if selectedPOI == nil {
             // get POIs
             if (pois.count == 0){
@@ -63,20 +83,20 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
             }
             
         }
-        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        sceneLocationView.pause()
-    }
+    // MARK: Navigation bar actions
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        sceneLocationView.frame = view.bounds
+    @IBAction func resetButtonPressed(_ sender: Any) {
+
+        // hide reset button
+        resetButton.tintColor = .clear
+        resetButton.isEnabled = false
+        resetButton.isAccessibilityElement = false
+
+        // re-draw the AR scene
+        selectedPOI = nil
+        drawARScene()
     }
     
     // MARK: location

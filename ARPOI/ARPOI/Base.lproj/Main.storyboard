@@ -94,10 +94,24 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="kHe-N7-MXk"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ysc-uh-wWX">
+                        <barButtonItem key="rightBarButtonItem" image="restart" style="plain" id="Asz-gN-dIN">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="resetButtonPressed:" destination="9oS-lR-lD8" id="doA-Lc-fT4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="resetButton" destination="Asz-gN-dIN" id="CTn-WH-9H3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kA0-8m-Sqn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137" y="887"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="restart" width="20" height="23"/>
+    </resources>
 </document>
