@@ -37,26 +37,9 @@ open class RouteSegmentAnnotationNode: LocationNode {
         
         routeNode = LineNode(start: startNode.position, end: endNode.position)
         
-//        let routeGeometry = SCNGeometry().lineFrom(vector: startNode.position, toVector: endNode.position)
-//        routeGeometry.firstMaterial!.diffuse.contents = UIColor.cyan
-//        routeGeometry.firstMaterial!.lightingModel = .phong
-//        routeNode = SCNNode()
-//        routeNode.geometry = routeGeometry
-        
         super.init(location: locationInBetween)
         
         addChildNode(routeNode)
-        
-//        // ------
-//        // for debug purposes
-//        let routeGeometryCopy = SCNCylinder(radius: 5, height: distance)
-//        routeGeometryCopy.firstMaterial!.diffuse.contents = UIColor.red
-//        routeGeometryCopy.firstMaterial!.lightingModel = .phong
-//        routeGeometryCopy.firstMaterial!.fillMode = .lines
-//        let routeNodeCopy = SCNNode()
-//        routeNodeCopy.geometry = routeGeometryCopy
-//        addChildNode(routeNodeCopy)
-//        // ------
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -64,17 +47,6 @@ open class RouteSegmentAnnotationNode: LocationNode {
     }
     
 }
-
-//extension SCNGeometry {
-//    func lineFrom(vector vector1: SCNVector3, toVector vector2: SCNVector3) -> SCNGeometry {
-//
-//        let indices: [Int32] = [0, 1]
-//        let source = SCNGeometrySource(vertices: [vector1, vector2])
-//        let element = SCNGeometryElement(indices: indices, primitiveType: .line)
-//
-//        return SCNGeometry(sources: [source], elements: [element])
-//    }
-//}
 
 class LineNode: SCNNode{
     

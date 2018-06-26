@@ -24,7 +24,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     var sceneLocationView: SceneLocationView!
     
     var pois: [PointOfInterest]!
-    var locationAnnotationNode2POI: [LocationAnnotationNode: PointOfInterest]!
+    var locationAnnotationNode2POI: [LocationTextAnnotationNode: PointOfInterest]!
     var selectedPOI: PointOfInterest?
     
     var drawnLocationNodes: [LocationNode]!
@@ -139,7 +139,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
             if !hits.isEmpty {
                 
                 // select the first match
-                let tappedNode = hits.first?.node.parent as! LocationAnnotationNode
+                let tappedNode = hits.first?.node.parent as! LocationTextAnnotationNode
                 if let poi = locationAnnotationNode2POI?[tappedNode] {
                     presentPOIAlertViewfor(poi: poi)
                 }
@@ -184,7 +184,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func setupPOIs() {
         pois = []
-        locationAnnotationNode2POI = [LocationAnnotationNode: PointOfInterest]()
+        locationAnnotationNode2POI = [LocationTextAnnotationNode: PointOfInterest]()
         drawnLocationNodes = []
     }
     
@@ -327,7 +327,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func addPOIToARScene(_ poi: PointOfInterest) {
         let location = CLLocation(latitude: poi.latitude, longitude: poi.longitude)
-        let annotationNode = LocationAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!)
+        let annotationNode = LocationTextAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!, text: poi.title)
         
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
         drawnLocationNodes.append(annotationNode)
