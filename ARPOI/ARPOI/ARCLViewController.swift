@@ -19,6 +19,8 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager: CLLocationManager!
     var latestLocation: CLLocation?
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     var sceneLocationView: SceneLocationView!
     
     var pois: [PointOfInterest]!
@@ -68,6 +70,34 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: Navigation bar actions
     
+    func toggleSegmentControl() {
+        if selectedPOI == nil {
+            showSegmentControl()
+        }
+        else {
+            hideSegmentControl()
+        }
+    }
+    
+    func hideSegmentControl() {
+        // hide
+        resetButton.tintColor = .clear
+        resetButton.isEnabled = false
+        resetButton.isAccessibilityElement = false
+    }
+    
+    func showSegmentControl() {
+        // show
+        resetButton.tintColor = .blue
+        resetButton.isEnabled = true
+        resetButton.isAccessibilityElement = true
+    }
+    
+    @IBAction func segmentedControlValueChanged(_ sender: Any) {
+        // re-draw the AR scene
+        clearNodesAndRedrawARScene()
+    }
+    
     func toggleResetButtonStatus() {
         if selectedPOI == nil {
             hideResetButton()
@@ -78,24 +108,21 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func hideResetButton() {
-        // hide reset button
+        // hide
         resetButton.tintColor = .clear
         resetButton.isEnabled = false
         resetButton.isAccessibilityElement = false
     }
     
     func showResetButton() {
-        // show reset button
+        // show
         resetButton.tintColor = .blue
         resetButton.isEnabled = true
         resetButton.isAccessibilityElement = true
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
-
-        // re-draw the AR scene
-        selectedPOI = nil
-        clearNodesAndRedrawARScene()
+        resetARScene()
     }
     
     // MARK: AR scene actions
@@ -158,16 +185,37 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         drawnLocationNodes = []
     }
     
-    func getPOIs() -> [PointOfInterest] {
+    func getPOIs() {
         
-        return [
-            PointOfInterest(latitude: -52.504571, longitude: 0.019717, altitude: 0),
-            PointOfInterest(latitude: -51.504571, longitude: 0.019717, altitude: 0),
-            PointOfInterest(latitude: -50.504571, longitude: 0.019717, altitude: 0),
-            PointOfInterest(latitude: 52.504571, longitude: -0.019717, altitude: 0),
-            PointOfInterest(latitude: 51.504571, longitude: -0.019717, altitude: 0),
-            PointOfInterest(latitude: 50.504571, longitude: -0.019717, altitude: 0)
-        ]
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
+        request.region = MKCoordinateRegion(center: (latestLocation?.coordinate)!,
+                                            latitudinalMeters: 2000,
+                                            longitudinalMeters: 2000)
+        
+        let search = MKLocalSearch(request: request)
+        search.start {
+            (response, error) in
+            
+            guard let response = response else {
+                if let error = error {
+                    print("Search error: \(error)")
+                }
+                return
+            }
+            
+            self.pois = []
+            
+            for item in response.mapItems {
+                let coordinate = item.placemark.coordinate
+                let poi = PointOfInterest(title: item.placemark.title!,
+                                          latitude: coordinate.latitude,
+                                          longitude: coordinate.longitude,
+                                          altitude: 0)
+                self.pois.append( poi)
+                self.addPOIToARScene(poi)
+            }
+        }
     }
     
     // MARK: Directions
@@ -290,12 +338,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         if selectedPOI == nil {
             // get POIs
             if (pois.count == 0){
-                pois = getPOIs()
-            }
-            
-            // add POIs to AR Scene
-            for poi in pois {
-                addPOIToARScene(poi)
+                getPOIs()
             }
         }
         else {
@@ -318,8 +361,14 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         drawnLocationNodes = []
         
         toggleResetButtonStatus()
+        toggleSegmentControl()
         
         drawARScene()
+    }
+    
+    func resetARScene() {
+        selectedPOI = nil
+        clearNodesAndRedrawARScene()
     }
     
 }
