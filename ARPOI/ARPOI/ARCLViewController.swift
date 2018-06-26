@@ -140,9 +140,9 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                 
                 // select the first match
                 let tappedNode = hits.first?.node.parent as! LocationAnnotationNode
-                selectedPOI = locationAnnotationNode2POI?[tappedNode]
-
-                clearNodesAndRedrawARScene()
+                if let poi = locationAnnotationNode2POI?[tappedNode] {
+                    presentPOIAlertViewfor(poi: poi)
+                }
             }
             
         }
@@ -165,8 +165,11 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LocationManager didFailWithError: %@", error)
-        let alertController = UIAlertController(title: "LocationManager Error", message: "Failed to Get Your Location", preferredStyle: .alert)
-        self.present(alertController, animated: true, completion: nil)
+        self.presentConfirmationAlertViewWith(
+            title: "Location Error",
+            message: "Failed to get your current location.",
+            handler: nil
+        )
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -194,18 +197,28 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                                             longitudinalMeters: 2000)
         
         let search = MKLocalSearch(request: request)
+        print("Getting POIs")
         search.start {
             (response, error) in
             
             guard let response = response else {
                 if let error = error {
+                    // show alert with error and ok button for reset
                     print("Search error: \(error)")
+
+                    self.presentConfirmationAlertViewWith(
+                        title: "POIs Error",
+                        message: "Could not fetch POIS near your current location.",
+                        handler: { action in
+                            self.resetARScene()
+                    })
                 }
                 return
             }
-            
+
+            print("Got POIs")
+
             self.pois = []
-            
             for item in response.mapItems {
                 let coordinate = item.placemark.coordinate
                 let poi = PointOfInterest(title: item.placemark.title!,
@@ -226,16 +239,28 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         
         // Request the directions between the two points
         let directions = MKDirections(request: directionRequest)
+        print("Getting directions")
         directions.calculate {
             (response, error) -> Void in
             
             guard let response = response else {
                 if let error = error {
+                    // Show alert with error and ok button for reset
                     print("Error: \(error)")
+
+                    let poiString = self.selectedPOI?.title ?? "the POI"
+                    self.presentConfirmationAlertViewWith(
+                        title: "Directions Error",
+                        message: "Could not fetch directions between your current location and \(poiString).",
+                        handler: { action in
+                            self.resetARScene()
+                    })
                 }
                 return
             }
-            
+
+            print("Got directions")
+
             // add route segments to AR Scene
             self.manageRouteDirections(response)
         }
@@ -270,22 +295,31 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func manageRouteDirections(_ response: MKDirections.Response) {
         for route in response.routes {
+
+            // add route coordinates together so we can build our AR path
+            var routeCoordinates = [CLLocationCoordinate2D]()
             for step in route.steps {
                 
                 let pointCount = step.polyline.pointCount
-                if pointCount == 2 {
-                    
-                    let routeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
-                    step.polyline.getCoordinates(routeCoordinates, range: NSMakeRange(0, pointCount))
-                    
-                    let startCoordinate = routeCoordinates[0]
-                    let endCoordinate = routeCoordinates[1]
-                    
-                    let routeSegment = RouteSegment(startLatitude: startCoordinate.latitude, startLongitude: startCoordinate.longitude, startAltitude: 0,
-                                                    endLatitude: endCoordinate.latitude, endLongitude: endCoordinate.longitude, endAltitude: 0)
-                    self.addRouteSegmentToARScene(routeSegment)
+                let stepCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+                step.polyline.getCoordinates(stepCoordinates, range: NSRange(location: 0, length: pointCount))
+
+                for i in 0..<pointCount {
+                    routeCoordinates.append(stepCoordinates[i])
                 }
             }
+
+            for i in 0..<routeCoordinates.count-1 {
+
+                let startCoordinate = routeCoordinates[i]
+                let endCoordinate = routeCoordinates[i+1]
+
+                let routeSegment = RouteSegment(startLatitude: startCoordinate.latitude, startLongitude: startCoordinate.longitude, startAltitude: 0,
+                                                endLatitude: endCoordinate.latitude, endLongitude: endCoordinate.longitude, endAltitude: 0)
+                self.addRouteSegmentToARScene(routeSegment)
+            }
+
+            self.addDestinationPOIToARScene(selectedPOI!)
         }
     }
     
@@ -336,10 +370,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     func drawARScene() {
         
         if selectedPOI == nil {
-            // get POIs
-            if (pois.count == 0){
-                getPOIs()
-            }
+            getPOIs()
         }
         else {
             if latestLocation != nil {
@@ -370,5 +401,25 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         selectedPOI = nil
         clearNodesAndRedrawARScene()
     }
-    
+
+    // MARK: Alert views
+
+    func presentConfirmationAlertViewWith(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handler))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func presentPOIAlertViewfor(poi: PointOfInterest) {
+        let alert = UIAlertController(title: poi.title,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Get directions", style: .default, handler: { action in
+            self.selectedPOI = poi
+            self.clearNodesAndRedrawARScene()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
 }
