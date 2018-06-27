@@ -31,7 +31,7 @@ open class RouteAnnotationNode: LocationNode {
         let sphere = SCNSphere(radius: 5)
         sphere.firstMaterial!.diffuse.contents = color
         sphere.firstMaterial!.lightingModel = .phong
-        sphere.firstMaterial!.fillMode = .lines
+        // sphere.firstMaterial!.fillMode = .lines // used for debug purposes
         
         annotationNode = SCNNode()
         annotationNode.geometry = sphere

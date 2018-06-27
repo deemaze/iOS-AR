@@ -95,7 +95,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func segmentedControlValueChanged(_ sender: Any) {
         // re-draw the AR scene
-        clearNodesAndRedrawARScene()
+        resetARScene()
     }
     
     func toggleResetButtonStatus() {
@@ -318,8 +318,13 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                                                 endLatitude: endCoordinate.latitude, endLongitude: endCoordinate.longitude, endAltitude: 0)
                 self.addRouteSegmentToARScene(routeSegment)
             }
-
-            self.addDestinationPOIToARScene(selectedPOI!)
+            
+            // handle destination
+            
+            let finalStepCoordinate = routeCoordinates[routeCoordinates.count-1]
+            let routeSegment = RouteSegment(startLatitude: finalStepCoordinate.latitude, startLongitude: finalStepCoordinate.longitude, startAltitude: 0,
+                                            endLatitude: selectedPOI!.latitude, endLongitude: selectedPOI!.longitude, endAltitude: 0)
+            self.addFinalRouteSegmentToARScene(routeSegment)
         }
     }
     
@@ -327,11 +332,27 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func addPOIToARScene(_ poi: PointOfInterest) {
         let location = CLLocation(latitude: poi.latitude, longitude: poi.longitude)
-        let annotationNode = LocationTextAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!, text: poi.title)
+        let text = poi.title.replacingOccurrences(of: ", ", with: "\n")
+        let annotationNode = LocationTextAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!, text: text)
         
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
         drawnLocationNodes.append(annotationNode)
         locationAnnotationNode2POI[annotationNode] = poi
+    }
+
+    func addFinalRouteSegmentToARScene(_ routeSegment: RouteSegment) {
+        
+        let startLocation = CLLocation(latitude: routeSegment.startLatitude, longitude: routeSegment.startLongitude)
+        let startNode = RouteAnnotationNode(location: startLocation)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: startNode)
+        drawnLocationNodes.append(startNode)
+        
+        self.addDestinationPOIToARScene(selectedPOI!)
+        let endNode = drawnLocationNodes.last as! RouteAnnotationNode
+        
+        let routeSegmentAnnotationNode = RouteSegmentAnnotationNode(startNode: startNode, endNode: endNode)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: routeSegmentAnnotationNode)
+        drawnLocationNodes.append(routeSegmentAnnotationNode)
     }
     
     func addRouteSegmentToARScene(_ routeSegment: RouteSegment) {

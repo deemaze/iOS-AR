@@ -67,7 +67,7 @@ class LineNode: SCNNode{
         let cylgeo = SCNBox(width: 5, height: distance, length: 5, chamferRadius: 0)
         cylgeo.firstMaterial!.diffuse.contents = UIColor.cyan
         cylgeo.firstMaterial!.lightingModel = .phong
-        cylgeo.firstMaterial!.fillMode = .lines
+        // cylgeo.firstMaterial!.fillMode = .lines // used for debug purposes
         
         let ndCylinder = SCNNode(geometry: cylgeo )
         ndCylinder.position.y = Float(-distance/2) + 0.001
