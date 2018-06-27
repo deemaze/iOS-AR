@@ -19,7 +19,7 @@ open class LocationNode: SCNNode {
     
     /// A general purpose tag that can be used to find nodes already added to a SceneLocationView
     public var tag: String?
-
+    
     ///Whether the location of the node has been confirmed.
     ///This is automatically set to true when you create a node using a location.
     ///Otherwise, this is false, and becomes true once the user moves 100m away from the node,
@@ -43,6 +43,13 @@ open class LocationNode: SCNNode {
     ///at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
     public var continuallyUpdatePositionAndScale = true
     
+    ///Whether the node should be scaled relative to its distance from the camera
+    ///Default value (false) scales it to visually appear at the same size no matter the distance
+    ///Setting to true causes annotation nodes to scale like a regular node
+    ///Scaling relative to distance may be useful with local navigation-based uses
+    ///For landmarks in the distance, the default is correct
+    public var scaleRelativeToDistance = false
+    
     public init(location: CLLocation?) {
         self.location = location
         self.locationConfirmed = location != nil
@@ -61,15 +68,7 @@ open class LocationAnnotationNode: LocationNode {
     public let image: UIImage
     
     ///Subnodes and adjustments should be applied to this subnode
-    ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
     public let annotationNode: SCNNode
-    
-    ///Whether the node should be scaled relative to its distance from the camera
-    ///Default value (false) scales it to visually appear at the same size no matter the distance
-    ///Setting to true causes annotation nodes to scale like a regular node
-    ///Scaling relative to distance may be useful with local navigation-based uses
-    ///For landmarks in the distance, the default is correct
-    public var scaleRelativeToDistance = false
     
     public init(location: CLLocation?, image: UIImage) {
         self.image = image

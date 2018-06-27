@@ -100,8 +100,8 @@
                             <rect key="frame" x="100" y="7" width="175" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="Tourism"/>
                                 <segment title="Restaurants"/>
+                                <segment title="Tourism"/>
                             </segments>
                             <connections>
                                 <action selector="segmentedControlValueChanged:" destination="9oS-lR-lD8" eventType="valueChanged" id="BdY-LY-gS7"/>

@@ -12,22 +12,30 @@
 import Foundation
 import SceneKit
 import CoreLocation
-import ARCL
 
-open class LocationTextAnnotationNode: LocationAnnotationNode {
+open class LocationTextAnnotationNode: LocationNode {
     
-    // text that is displayed by the SCNText
+    // image and text that are displayed by the sub-nodes
+    public let image: UIImage
     public let text: String
     
-    ///Subnodes and adjustments should be applied to this subnode
-    ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
+    public let imageAnnotationNode: SCNNode
     public let textAnnotationNode: SCNNode
     
     public init(location: CLLocation?, image: UIImage, text: String) {
         self.text = text
+        self.image = image
+        
+        let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
+        plane.firstMaterial!.diffuse.contents = image
+        plane.firstMaterial!.lightingModel = .constant
+        
+        imageAnnotationNode = SCNNode()
+        imageAnnotationNode.geometry = plane
         
         let textShape = SCNText(string: text, extrusionDepth: 1)
         textShape.firstMaterial!.diffuse.contents = UIColor.white
+        textShape.firstMaterial!.specular.contents = UIColor.black
         textShape.firstMaterial!.lightingModel = .phong
         textShape.isWrapped = true
         textShape.alignmentMode = CATextLayerAlignmentMode.center.rawValue
@@ -35,8 +43,14 @@ open class LocationTextAnnotationNode: LocationAnnotationNode {
         textAnnotationNode = SCNNode()
         textAnnotationNode.geometry = textShape
         
-        super.init(location: location, image: image)
+        super.init(location: location)
+        scaleRelativeToDistance = true
         
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
+        addChildNode(imageAnnotationNode)
         addChildNode(textAnnotationNode)
         
         // center text correctly around (x) and below (y) origin (SCNText's origins in in the bottom left corner)

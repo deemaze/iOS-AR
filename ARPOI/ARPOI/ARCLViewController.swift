@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import ARCL
 import CoreLocation
 
 @available(iOS 11.0, *)
@@ -138,10 +137,13 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
             let hits = sceneLocationView.hitTest(location, options: nil)
             if !hits.isEmpty {
                 
+                // TODO: handle touches when already displaying directions
+                
                 // select the first match
-                let tappedNode = hits.first?.node.parent as! LocationTextAnnotationNode
-                if let poi = locationAnnotationNode2POI?[tappedNode] {
-                    presentPOIAlertViewfor(poi: poi)
+                if let tappedNode = hits.first?.node.parent as? LocationTextAnnotationNode {
+                    if let poi = locationAnnotationNode2POI?[tappedNode] {
+                        presentPOIAlertViewfor(poi: poi)
+                    }
                 }
             }
             
@@ -177,6 +179,11 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         
         if (locations.count > 0) {
             latestLocation = locations.last!
+            // latestLocation.coordinate.longitude
+            // latestLocation.coordinate.latitude
+
+            // TODO: remove all points from AR scene
+            // TODO: add new points to AR scene
         }
     }
     

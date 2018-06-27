@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3146E61BC08535F97EC2133B /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBB4CBCD73EBE356ED48F20 /* Pods_ARPOI.framework */; };
+		A823232320E3EC53001A897B /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231920E3EC53001A897B /* SCNVector3+Extensions.swift */; };
+		A823232420E3EC53001A897B /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231A20E3EC53001A897B /* SceneLocationEstimate.swift */; };
+		A823232520E3EC53001A897B /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231B20E3EC53001A897B /* SceneLocationEstimate+Extensions.swift */; };
+		A823232620E3EC53001A897B /* FloatingPoint+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231C20E3EC53001A897B /* FloatingPoint+Radians.swift */; };
+		A823232720E3EC53001A897B /* LocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231D20E3EC53001A897B /* LocationNode.swift */; };
+		A823232820E3EC53001A897B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231E20E3EC53001A897B /* CGPoint+Extensions.swift */; };
+		A823232920E3EC53001A897B /* CLLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823231F20E3EC53001A897B /* CLLocation+Extensions.swift */; };
+		A823232A20E3EC53001A897B /* SceneLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823232020E3EC53001A897B /* SceneLocationView.swift */; };
+		A823232B20E3EC53001A897B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823232120E3EC53001A897B /* LocationManager.swift */; };
+		A823232C20E3EC53001A897B /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A823232220E3EC53001A897B /* SCNNode+Extensions.swift */; };
 		A824E10820E2B03C00025F96 /* LocationTextAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A824E10720E2B03C00025F96 /* LocationTextAnnotationNode.swift */; };
 		A83B553520D946E50018CA34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83B553420D946E50018CA34 /* AppDelegate.swift */; };
 		A83B553720D946E50018CA34 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A83B553620D946E50018CA34 /* art.scnassets */; };
@@ -20,12 +31,21 @@
 		A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */; };
 		A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */; };
 		A83E673920DCFB3000A2CC69 /* RouteAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83E673820DCFB3000A2CC69 /* RouteAnnotationNode.swift */; };
-		FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.release.xcconfig"; sourceTree = "<group>"; };
-		1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.debug.xcconfig"; sourceTree = "<group>"; };
+		01684EA141E09629B2491A49 /* Pods-ARPOI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.release.xcconfig"; sourceTree = "<group>"; };
+		7BBB4CBCD73EBE356ED48F20 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A823231920E3EC53001A897B /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
+		A823231A20E3EC53001A897B /* SceneLocationEstimate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneLocationEstimate.swift; sourceTree = "<group>"; };
+		A823231B20E3EC53001A897B /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
+		A823231C20E3EC53001A897B /* FloatingPoint+Radians.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Radians.swift"; sourceTree = "<group>"; };
+		A823231D20E3EC53001A897B /* LocationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationNode.swift; sourceTree = "<group>"; };
+		A823231E20E3EC53001A897B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		A823231F20E3EC53001A897B /* CLLocation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Extensions.swift"; sourceTree = "<group>"; };
+		A823232020E3EC53001A897B /* SceneLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneLocationView.swift; sourceTree = "<group>"; };
+		A823232120E3EC53001A897B /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		A823232220E3EC53001A897B /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
 		A824E10720E2B03C00025F96 /* LocationTextAnnotationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTextAnnotationNode.swift; sourceTree = "<group>"; };
 		A83B553120D946E50018CA34 /* ARPOI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPOI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83B553420D946E50018CA34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +63,7 @@
 		A83E671F20DBB98B00A2CC69 /* RouteSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegment.swift; sourceTree = "<group>"; };
 		A83E672120DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSegmentAnnotationNode.swift; sourceTree = "<group>"; };
 		A83E673820DCFB3000A2CC69 /* RouteAnnotationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAnnotationNode.swift; sourceTree = "<group>"; };
-		BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F27D8C4FA402886695C2E057 /* Pods-ARPOI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPOI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,20 +72,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83E671820DA9D2B00A2CC69 /* CoreLocation.framework in Frameworks */,
-				FB6BFB4EA5F72A9083CF6ACC /* Pods_ARPOI.framework in Frameworks */,
+				3146E61BC08535F97EC2133B /* Pods_ARPOI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6F0E5E3F87B170470584398B /* Pods */ = {
+		03769C274D59C711ACDB7031 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */,
-				13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */,
+				F27D8C4FA402886695C2E057 /* Pods-ARPOI.debug.xcconfig */,
+				01684EA141E09629B2491A49 /* Pods-ARPOI.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A823231820E3EC53001A897B /* ARCL */ = {
+			isa = PBXGroup;
+			children = (
+				A823231920E3EC53001A897B /* SCNVector3+Extensions.swift */,
+				A823231A20E3EC53001A897B /* SceneLocationEstimate.swift */,
+				A823231B20E3EC53001A897B /* SceneLocationEstimate+Extensions.swift */,
+				A823231C20E3EC53001A897B /* FloatingPoint+Radians.swift */,
+				A823231D20E3EC53001A897B /* LocationNode.swift */,
+				A823231E20E3EC53001A897B /* CGPoint+Extensions.swift */,
+				A823231F20E3EC53001A897B /* CLLocation+Extensions.swift */,
+				A823232020E3EC53001A897B /* SceneLocationView.swift */,
+				A823232120E3EC53001A897B /* LocationManager.swift */,
+				A823232220E3EC53001A897B /* SCNNode+Extensions.swift */,
+			);
+			path = ARCL;
 			sourceTree = "<group>";
 		};
 		A83B552820D946E50018CA34 = {
@@ -74,7 +111,7 @@
 				A83B553320D946E50018CA34 /* ARPOI */,
 				A83B553220D946E50018CA34 /* Products */,
 				A83E671420DA9D1F00A2CC69 /* Frameworks */,
-				6F0E5E3F87B170470584398B /* Pods */,
+				03769C274D59C711ACDB7031 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,6 +126,7 @@
 		A83B553320D946E50018CA34 /* ARPOI */ = {
 			isa = PBXGroup;
 			children = (
+				A823231820E3EC53001A897B /* ARCL */,
 				A83B553420D946E50018CA34 /* AppDelegate.swift */,
 				A83B553620D946E50018CA34 /* art.scnassets */,
 				A83B553820D946E50018CA34 /* ARKitViewController.swift */,
@@ -112,7 +150,7 @@
 				A83E671920DAB5D000A2CC69 /* ARCL.framework */,
 				A83E671720DA9D2B00A2CC69 /* CoreLocation.framework */,
 				A83E671520DA9D1F00A2CC69 /* HDAugmentedReality.framework */,
-				BBB6DBFB2A4B9336426609A8 /* Pods_ARPOI.framework */,
+				7BBB4CBCD73EBE356ED48F20 /* Pods_ARPOI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,11 +162,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A83B554520D946E60018CA34 /* Build configuration list for PBXNativeTarget "ARPOI" */;
 			buildPhases = (
-				AEC0591132B9EDD67E3B30C1 /* [CP] Check Pods Manifest.lock */,
+				C06B87607F599DD015BDD602 /* [CP] Check Pods Manifest.lock */,
 				A83B552D20D946E50018CA34 /* Sources */,
 				A83B552E20D946E50018CA34 /* Frameworks */,
 				A83B552F20D946E50018CA34 /* Resources */,
-				ACA3FB315BB0A7D882855542 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -187,25 +224,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		ACA3FB315BB0A7D882855542 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ARCL/ARCL.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARCL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARPOI/Pods-ARPOI-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AEC0591132B9EDD67E3B30C1 /* [CP] Check Pods Manifest.lock */ = {
+		C06B87607F599DD015BDD602 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -230,14 +249,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A823232820E3EC53001A897B /* CGPoint+Extensions.swift in Sources */,
+				A823232B20E3EC53001A897B /* LocationManager.swift in Sources */,
+				A823232920E3EC53001A897B /* CLLocation+Extensions.swift in Sources */,
 				A83E671C20DAB94200A2CC69 /* ARCLViewController.swift in Sources */,
+				A823232420E3EC53001A897B /* SceneLocationEstimate.swift in Sources */,
+				A823232A20E3EC53001A897B /* SceneLocationView.swift in Sources */,
+				A823232320E3EC53001A897B /* SCNVector3+Extensions.swift in Sources */,
 				A83E671E20DAC6A400A2CC69 /* PointOfInterest.swift in Sources */,
 				A83B553920D946E50018CA34 /* ARKitViewController.swift in Sources */,
+				A823232620E3EC53001A897B /* FloatingPoint+Radians.swift in Sources */,
 				A83E672220DBBC8D00A2CC69 /* RouteSegmentAnnotationNode.swift in Sources */,
 				A824E10820E2B03C00025F96 /* LocationTextAnnotationNode.swift in Sources */,
+				A823232C20E3EC53001A897B /* SCNNode+Extensions.swift in Sources */,
+				A823232520E3EC53001A897B /* SceneLocationEstimate+Extensions.swift in Sources */,
 				A83B553520D946E50018CA34 /* AppDelegate.swift in Sources */,
 				A83E673920DCFB3000A2CC69 /* RouteAnnotationNode.swift in Sources */,
 				A83E672020DBB98B00A2CC69 /* RouteSegment.swift in Sources */,
+				A823232720E3EC53001A897B /* LocationNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +408,7 @@
 		};
 		A83B554620D946E60018CA34 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A5D288FC933ED10BDFA6A5B /* Pods-ARPOI.debug.xcconfig */;
+			baseConfigurationReference = F27D8C4FA402886695C2E057 /* Pods-ARPOI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -398,7 +427,7 @@
 		};
 		A83B554720D946E60018CA34 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13EDFB7546654F3E7809C41B /* Pods-ARPOI.release.xcconfig */;
+			baseConfigurationReference = 01684EA141E09629B2491A49 /* Pods-ARPOI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

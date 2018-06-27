@@ -3,7 +3,7 @@ platform :ios, '11.0'
 target "ARPOI" do
 	use_frameworks!
 
-	pod 'ARCL', '~> 1.0'
+    # pod 'ARCL', :git => 'https://github.com/aclima93/ARKit-CoreLocation.git', :branch => 'multi-subnode-distance-scaling'
 
 	post_install do |installer|
 		installer.pods_project.targets.each do |target|
