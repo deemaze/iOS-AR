@@ -17,6 +17,7 @@ import ARCL
 open class RouteSegmentAnnotationNode: LocationNode {
     
     public let routeNode: SCNNode
+    public let textNode: SCNNode
     
     ///Whether the node should be scaled relative to its distance from the camera
     ///Setting to true causes annotation nodes to scale like a regular node
@@ -36,10 +37,13 @@ open class RouteSegmentAnnotationNode: LocationNode {
                                            altitude: (startLocation.altitude + endLocation.altitude)/2.0)
         
         routeNode = LineNode(start: startNode.position, end: endNode.position)
+        textNode = TextNode(startLocation: startLocation, endLocation: endLocation)
         
         super.init(location: locationInBetween)
         
         addChildNode(routeNode)
+        addChildNode(textNode)
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -48,12 +52,46 @@ open class RouteSegmentAnnotationNode: LocationNode {
     
 }
 
+class TextNode: SCNNode {
+    
+    init(startLocation: CLLocation, endLocation: CLLocation) {
+        super.init()
+        
+        let distance = Int( round( startLocation.distance(from: endLocation)))
+        
+        let textShape = SCNText(string: "\(distance) m", extrusionDepth: 1)
+        textShape.firstMaterial!.diffuse.contents = UIColor.white
+        textShape.firstMaterial!.specular.contents = UIColor.black
+        textShape.firstMaterial!.lightingModel = .phong
+        textShape.isWrapped = true
+        textShape.alignmentMode = CATextLayerAlignmentMode.center.rawValue
+        
+        let textNode = SCNNode()
+        textNode.geometry = textShape
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
+        addChildNode(textNode)
+        
+        // center text correctly around the origin (x axis only) (SCNText's origins in in the bottom left corner)
+        let min = textNode.boundingBox.min
+        let max = textNode.boundingBox.max
+        textNode.pivot = SCNMatrix4MakeTranslation((max.x - min.x) / 2, 0, 0);
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
 class LineNode: SCNNode{
     
     init(start: SCNVector3, end: SCNVector3) {
         super.init()
         
-        let distance = distanceBetweenPoints2(pointA: start, pointB: end)
+        let distance = distanceBetweenScenePoints(pointA: start, pointB: end)
         
         position = start
         
@@ -69,7 +107,7 @@ class LineNode: SCNNode{
         cylgeo.firstMaterial!.lightingModel = .phong
         // cylgeo.firstMaterial!.fillMode = .lines // used for debug purposes
         
-        let ndCylinder = SCNNode(geometry: cylgeo )
+        let ndCylinder = SCNNode(geometry: cylgeo)
         ndCylinder.position.y = Float(-distance/2) + 0.001
         ndZAlign.addChildNode(ndCylinder)
         
@@ -79,7 +117,7 @@ class LineNode: SCNNode{
     }
     
     
-    func distanceBetweenPoints2(pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
+    func distanceBetweenScenePoints(pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
         let distance = sqrt(
             (pointA.x - pointB.x) * (pointA.x - pointB.x) +
             (pointA.y - pointB.y) * (pointA.y - pointB.y) +

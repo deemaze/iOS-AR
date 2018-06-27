@@ -220,11 +220,14 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
 
             self.pois = []
             for item in response.mapItems {
-                let coordinate = item.placemark.coordinate
-                let poi = PointOfInterest(title: item.placemark.title!,
-                                          latitude: coordinate.latitude,
-                                          longitude: coordinate.longitude,
-                                          altitude: 0)
+                let location = CLLocation(coordinate: item.placemark.coordinate, altitude: 0)
+                let distance = Int( round( self.latestLocation!.distance(from: location) ))
+                let title = "\(item.placemark.name!)\n\(distance) m"
+                
+                let poi = PointOfInterest(title: title,
+                                          latitude: location.coordinate.latitude,
+                                          longitude: location.coordinate.longitude,
+                                          altitude: location.altitude)
                 self.pois.append( poi)
                 self.addPOIToARScene(poi)
             }

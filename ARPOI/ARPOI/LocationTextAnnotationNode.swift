@@ -37,10 +37,6 @@ open class LocationTextAnnotationNode: LocationAnnotationNode {
         
         super.init(location: location, image: image)
         
-        let billboardConstraint = SCNBillboardConstraint()
-        billboardConstraint.freeAxes = SCNBillboardAxis.Y
-        constraints = [billboardConstraint]
-        
         addChildNode(textAnnotationNode)
         
         // center text correctly around (x) and below (y) origin (SCNText's origins in in the bottom left corner)
