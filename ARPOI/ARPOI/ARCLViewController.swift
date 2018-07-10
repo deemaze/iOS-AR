@@ -44,13 +44,14 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Run the view's session
+        // Run the view's AR session
         sceneLocationView.run()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // draw the AR scene
         drawARScene()
     }
     
@@ -121,6 +122,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
+        // re-draw the AR scene
         resetARScene()
     }
     
@@ -128,7 +130,14 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     @objc
     func handleARObjectTap(gestureRecognizer: UITapGestureRecognizer) {
-        guard gestureRecognizer.view != nil else { return }
+        guard gestureRecognizer.view != nil else {
+            return
+        }
+        
+        // ignore touches when already displaying directions
+        if selectedPOI != nil {
+            return
+        }
         
         if gestureRecognizer.state == .ended {
             
@@ -136,8 +145,6 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
             let location: CGPoint = gestureRecognizer.location(in: sceneLocationView)
             let hits = sceneLocationView.hitTest(location, options: nil)
             if !hits.isEmpty {
-                
-                // TODO: handle touches when already displaying directions
                 
                 // select the first match
                 if let tappedNode = hits.first?.node.parent as? LocationTextAnnotationNode {
@@ -159,6 +166,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // don't need more for walking between POIs
         
+        // request location updates
         locationManager?.startUpdatingLocation()
         locationManager?.requestWhenInUseAuthorization()
     }
@@ -167,6 +175,8 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LocationManager didFailWithError: %@", error)
+        
+        // show a confirmation alert
         self.presentConfirmationAlertViewWith(
             title: "Location Error",
             message: "Failed to get your current location.",
@@ -177,6 +187,7 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("LocationManager didUpdateLocations: %@", locations)
         
+        // handle updated location
         if (locations.count > 0) {
             latestLocation = locations.last!
             // latestLocation.coordinate.longitude
@@ -197,14 +208,15 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func getPOIs() {
         
+        // formulate natural language query for nearby POIs
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
         request.region = MKCoordinateRegion(center: (latestLocation?.coordinate)!,
                                             latitudinalMeters: 2000,
                                             longitudinalMeters: 2000)
         
+        // getting POIs
         let search = MKLocalSearch(request: request)
-        print("Getting POIs")
         search.start {
             (response, error) in
             
@@ -223,21 +235,24 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                 return
             }
 
-            print("Got POIs")
-
+            // add POIs to AR scene
             self.pois = []
-            for item in response.mapItems {
-                let location = CLLocation(coordinate: item.placemark.coordinate, altitude: 0)
-                let distance = Int( round( self.latestLocation!.distance(from: location) ))
-                let title = "\(item.placemark.name!)\n\(distance) m"
-                
-                let poi = PointOfInterest(title: title,
-                                          latitude: location.coordinate.latitude,
-                                          longitude: location.coordinate.longitude,
-                                          altitude: location.altitude)
-                self.pois.append( poi)
-                self.addPOIToARScene(poi)
-            }
+            self.addPOIsToARScene(response.mapItems)
+        }
+    }
+    
+    func addPOIsToARScene(_ items: [MKMapItem]) {
+        for item in items {
+            let location = CLLocation(coordinate: item.placemark.coordinate, altitude: 0)
+            let distance = Int( round( self.latestLocation!.distance(from: location) ))
+            let title = "\(item.placemark.name!)\n\(distance) m"
+            
+            let poi = PointOfInterest(title: title,
+                                      latitude: location.coordinate.latitude,
+                                      longitude: location.coordinate.longitude,
+                                      altitude: location.altitude)
+            self.pois.append( poi)
+            self.addPOIToARScene(poi)
         }
     }
     
@@ -245,11 +260,9 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     
     func getRouteSegments(startCoordinate: CLLocationCoordinate2D, endCoordinate: CLLocationCoordinate2D) {
         
-        let directionRequest = setupRouteDirectionsRequest(startCoordinate: startCoordinate, endCoordinate: endCoordinate)
-        
         // Request the directions between the two points
+        let directionRequest = setupRouteDirectionsRequest(startCoordinate: startCoordinate, endCoordinate: endCoordinate)
         let directions = MKDirections(request: directionRequest)
-        print("Getting directions")
         directions.calculate {
             (response, error) -> Void in
             
@@ -269,8 +282,6 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                 return
             }
 
-            print("Got directions")
-
             // add route segments to AR Scene
             self.manageRouteDirections(response)
         }
@@ -280,24 +291,10 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
         let sourcePlacemark = MKPlacemark(coordinate: startCoordinate, addressDictionary: nil)
         let destinationPlacemark = MKPlacemark(coordinate: endCoordinate, addressDictionary: nil)
         
-        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
-        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-        
-        let sourceAnnotation = MKPointAnnotation()
-        
-        if let location = sourcePlacemark.location {
-            sourceAnnotation.coordinate = location.coordinate
-        }
-        
-        let destinationAnnotation = MKPointAnnotation()
-        
-        if let location = destinationPlacemark.location {
-            destinationAnnotation.coordinate = location.coordinate
-        }
-        
+        // create the request for walking directions between the source and destination placemarks
         let directionRequest = MKDirections.Request()
-        directionRequest.source = sourceMapItem
-        directionRequest.destination = destinationMapItem
+        directionRequest.source = MKMapItem(placemark: sourcePlacemark)
+        directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
         directionRequest.transportType = .walking
         
         return directionRequest
@@ -313,24 +310,23 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
                 let pointCount = step.polyline.pointCount
                 let stepCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
                 step.polyline.getCoordinates(stepCoordinates, range: NSRange(location: 0, length: pointCount))
-
+                
                 for i in 0..<pointCount {
                     routeCoordinates.append(stepCoordinates[i])
                 }
             }
 
+            // create and add the route segments to the AR scene
             for i in 0..<routeCoordinates.count-1 {
 
                 let startCoordinate = routeCoordinates[i]
                 let endCoordinate = routeCoordinates[i+1]
-
                 let routeSegment = RouteSegment(startLatitude: startCoordinate.latitude, startLongitude: startCoordinate.longitude, startAltitude: 0,
                                                 endLatitude: endCoordinate.latitude, endLongitude: endCoordinate.longitude, endAltitude: 0)
                 self.addRouteSegmentToARScene(routeSegment)
             }
             
-            // handle destination
-            
+            // handle destination segment
             let finalStepCoordinate = routeCoordinates[routeCoordinates.count-1]
             let routeSegment = RouteSegment(startLatitude: finalStepCoordinate.latitude, startLongitude: finalStepCoordinate.longitude, startAltitude: 0,
                                             endLatitude: selectedPOI!.latitude, endLongitude: selectedPOI!.longitude, endAltitude: 0)
@@ -341,42 +337,48 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: AR Scene
     
     func addPOIToARScene(_ poi: PointOfInterest) {
+        // create node
         let location = CLLocation(latitude: poi.latitude, longitude: poi.longitude)
         let text = poi.title.replacingOccurrences(of: ", ", with: "\n")
         let annotationNode = LocationTextAnnotationNode(location: location, image: UIImage(named: "LocationMarker")!, text: text)
         
+        // add node to AR scene
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
         drawnLocationNodes.append(annotationNode)
         locationAnnotationNode2POI[annotationNode] = poi
     }
 
     func addFinalRouteSegmentToARScene(_ routeSegment: RouteSegment) {
-        
+        // create start node
         let startLocation = CLLocation(latitude: routeSegment.startLatitude, longitude: routeSegment.startLongitude)
         let startNode = RouteAnnotationNode(location: startLocation)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: startNode)
         drawnLocationNodes.append(startNode)
         
+        // add end node to AR scene
         self.addDestinationPOIToARScene(selectedPOI!)
         let endNode = drawnLocationNodes.last as! RouteAnnotationNode
         
+        // add route segment node to AR scene
         let routeSegmentAnnotationNode = RouteSegmentAnnotationNode(startNode: startNode, endNode: endNode)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: routeSegmentAnnotationNode)
         drawnLocationNodes.append(routeSegmentAnnotationNode)
     }
     
     func addRouteSegmentToARScene(_ routeSegment: RouteSegment) {
-        
+        // add start node to AR scene
         let startLocation = CLLocation(latitude: routeSegment.startLatitude, longitude: routeSegment.startLongitude)
         let startNode = RouteAnnotationNode(location: startLocation)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: startNode)
         drawnLocationNodes.append(startNode)
         
+        // add end node to AR scene
         let endLocation = CLLocation(latitude: routeSegment.endLatitude, longitude: routeSegment.endLongitude)
         let endNode = RouteAnnotationNode(location: endLocation)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: endNode)
         drawnLocationNodes.append(endNode)
         
+        // add route segment node to AR scene
         let routeSegmentAnnotationNode = RouteSegmentAnnotationNode(startNode: startNode, endNode: endNode)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: routeSegmentAnnotationNode)
         drawnLocationNodes.append(routeSegmentAnnotationNode)
@@ -391,9 +393,11 @@ class ARCLViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func setupARScene() {
+        // create AR scene
         sceneLocationView = SceneLocationView()
         view.addSubview(sceneLocationView)
         
+        // add tap gesture recognizer to AR scene's view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleARObjectTap(gestureRecognizer:)))
         sceneLocationView.addGestureRecognizer(tapGestureRecognizer)
     }

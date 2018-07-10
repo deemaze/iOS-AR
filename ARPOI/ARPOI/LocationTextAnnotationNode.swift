@@ -15,10 +15,11 @@ import CoreLocation
 
 open class LocationTextAnnotationNode: LocationNode {
     
-    // image and text that are displayed by the sub-nodes
+    // image and text that are displayed by the child nodes
     public let image: UIImage
     public let text: String
     
+    // child nodes
     public let imageAnnotationNode: SCNNode
     public let textAnnotationNode: SCNNode
     
@@ -26,13 +27,15 @@ open class LocationTextAnnotationNode: LocationNode {
         self.text = text
         self.image = image
         
-        let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
-        plane.firstMaterial!.diffuse.contents = image
-        plane.firstMaterial!.lightingModel = .constant
+        // create the child node that holds the location's marker image
+        let imagePlane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
+        imagePlane.firstMaterial!.diffuse.contents = image
+        imagePlane.firstMaterial!.lightingModel = .constant
         
         imageAnnotationNode = SCNNode()
-        imageAnnotationNode.geometry = plane
+        imageAnnotationNode.geometry = imagePlane
         
+        // create the child node that holds the location's name
         let textShape = SCNText(string: text, extrusionDepth: 1)
         textShape.firstMaterial!.diffuse.contents = UIColor.white
         textShape.firstMaterial!.specular.contents = UIColor.black
@@ -43,13 +46,16 @@ open class LocationTextAnnotationNode: LocationNode {
         textAnnotationNode = SCNNode()
         textAnnotationNode.geometry = textShape
         
+        // initializer ARCL's LocationNode
         super.init(location: location)
         scaleRelativeToDistance = true
         
+        // apply a billboard constraint so the parent node, so it always faces the user
         let billboardConstraint = SCNBillboardConstraint()
         billboardConstraint.freeAxes = SCNBillboardAxis.Y
         constraints = [billboardConstraint]
         
+        // add the child nodes
         addChildNode(imageAnnotationNode)
         addChildNode(textAnnotationNode)
         
